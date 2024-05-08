@@ -82,13 +82,13 @@ const Sidebar = () => {
   const open=useSelector((store)=>store.app.open);
 
   return (
-    <div className={`ml-6   left-0 ${open?'min-w-[20%]':'min-w-[9%]'} h-[calc(100vh-4.635rem)] overflow-y-scroll overflow-x-hidden `}>
+    <div className={`ml-6  bg-white  left-0 ${open?'min-w-[20%]':'min-w-[9%]'} h-[calc(100vh-4.635rem)] overflow-y-scroll overflow-x-hidden `}>
       {sidebarItems.map((item, index) => {
         return (
           <div key={index} className="flex  my-3 mx-5">
             {/* <item.icons /> */}
             {item.icons}
-            <p className={`mx-3 ${open?"":'hidden'}`}> {item.title}</p>
+            <p className={`mx-3 animate-fadeIn ${open?"":'hidden '}`}> {item.title}</p>
           </div>
         );
       })}

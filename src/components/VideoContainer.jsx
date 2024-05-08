@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { YOUTUBE_API,API_KEY } from '../constant/youtube'
 import Videocart from './Videocart'
+import { Link } from 'react-router-dom'
 
 const VideoContainer = () => {
   const [video,setVideo]=useState([]);
@@ -26,8 +27,10 @@ const VideoContainer = () => {
       {
         video.map((item)=>{
           return (
-            
-            <Videocart key={item.id} item={item}/>
+            <Link to={`/watch?v=${item.id}`} key={item.id}>
+            <Videocart  item={item}/>
+            </Link>
+           
            
             
           )
