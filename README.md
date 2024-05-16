@@ -7,8 +7,8 @@ Features:
 
 Search for videos using the Google Search API.
 Watch videos within the application.
-Responsive design.
-Dark mode for better user experience in low-light environments.
+
+
 Technologies Used:
 
 JavaScript
@@ -17,7 +17,8 @@ Tailwind CSS
 React Routing
 React Redux
 React Icons
-Future Updates:
 
+
+Future Updates:
 Make the application fully responsive to ensure compatibility across various devices and screen sizes.
 Implement a dark mode feature to enhance user experience, particularly in low-light environments.
