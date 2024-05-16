@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 const Feed = () => {
   const open=useSelector((store)=>store.app.open);
   return (
-    <div className={`ml-5 mr-5 `}>
+    <div className={`ml-5 mr-5 w-[75%]`}>
        <ButtonList/>
        <VideoContainer/>
     </div>

@@ -5,15 +5,36 @@ import { CiVideoOn } from "react-icons/ci";
 import Avatar from "react-avatar";
 import { CiSearch } from "react-icons/ci";
 import Sidebar from "./Sidebar";
-import { useDispatch } from "react-redux";
-import { toggleSidebar } from "../utils/appslice";
+import { useDispatch, useSelector } from "react-redux";
+import { setCategory, setSearchSuggestion, toggleSidebar } from "../utils/appslice";
+import { useEffect, useState } from "react";
+import { SEARCH_SUGGESTION_API } from "../constant/youtube";
+import axios from "axios";
 
 const Navbar = () => {
+  const [input,setInput]=useState("");
   const dispacth=useDispatch();
+  const {searchSuggestion}=useSelector((store)=>store.app)
+  const searchVideo=()=>{
+    dispacth(setCategory(input));
+    setInput("");
+    
+  }
   const toggleHandler=()=>{
   dispacth(toggleSidebar());
   }
-  
+  const showSuggestion=async()=>{
+   try {
+    const res=await axios.get(SEARCH_SUGGESTION_API+input);
+    console.log(res.data[1]);
+    dispacth(setSearchSuggestion(res?.data[1]));
+   } catch (error) {
+    console.log(error);
+   }
+  }
+  useEffect(()=>{
+    showSuggestion();
+  },[input])
   return (
     
         <div className=" fixed top-0 flex justify-center items-center w-[100%] bg-white">
@@ -23,10 +44,24 @@ const Navbar = () => {
         <img className="w-[115px] h-[40px] cursor-pointer"src="https://www.logo.wine/a/logo/YouTube/YouTube-Logo.wine.svg" alt="yt logo"/>
       </div>
       <div className="flex items-center w-[40%] ">
-      <div  className=" rounded-l-full w-[100%] py-2 px-4 border  border-gray-500 "><input placeholder="Search..."  className="w-full outline-none " type="text" /></div>
-      <button className="p-2 w-20 rounded-r-full border border-gray-400"><CiSearch size={"25px"}/></button>
-        
+      <div  className=" rounded-l-full w-[100%] py-2 px-4 border  border-gray-500 "><input value={input} onChange={(e)=>setInput(e.target.value)}  placeholder="Search..."  className="w-full outline-none " type="text" /></div>
+      <button onClick={searchVideo} className="p-2 w-20 rounded-r-full border border-gray-400"><CiSearch size={"25px"}/></button>
+     <div className="absolute top-14 cursor-pointer  z-50 w-[33%] bg-white rounded-lg">
+      <ul>
+        {
+          searchSuggestion.map((item,index)=>{
+            return (
+              <div onClick={()=>setInput(item)} className="ml-3 p-2 text-md font-medium hover:bg-slate-200">
+                <li>{item}</li>
+                <hr className="mt-1"/>
+              </div>
+            )
+          })
+        }
+      </ul>
+     </div>
       </div>
+
       <div className="flex items-center ">
       <CiVideoOn className="mx-2 cursor-pointer"  size={"20px"}/>
       <IoIosNotificationsOutline className="mx-2 cursor-pointer" size={"24px"}/>
